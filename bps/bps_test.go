@@ -5,7 +5,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/mercari/go-bps/bps"
+	"go.mercari.io/go-bps/bps"
 )
 
 func TestBPS_String_Default_BaseUnit(t *testing.T) {
