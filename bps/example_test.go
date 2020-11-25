@@ -3,7 +3,7 @@ package bps_test
 import (
 	"fmt"
 
-	"github.com/mercari/go-bps/bps"
+	"go.mercari.io/go-bps/bps"
 )
 
 type Bill struct {

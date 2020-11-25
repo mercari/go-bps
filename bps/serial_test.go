@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/mercari/go-bps/bps"
+	"go.mercari.io/go-bps/bps"
 )
 
 func TestBPS_Value(t *testing.T) {
