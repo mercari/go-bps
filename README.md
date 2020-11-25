@@ -1,8 +1,10 @@
 # go-bps
 
-[![Test](https://github.com/mercari/go-bps/workflows/test%20and%20coverage/badge.svg)](https://github.com/mercari/go-bps/actions?query=workflow%3A%22test+and+coverage%22)
-[![reviewdog](https://github.com/mercari/go-bps/workflows/reviewdog/badge.svg)](https://github.com/mercari/go-bps/actions?query=workflow%3Areviewdog)
-[![codecov](https://codecov.io/gh/mercari/go-bps/branch/master/graph/badge.svg?token=H39T7apqlM)](https://codecov.io/gh/mercari/go-bps)
+[![pkg.go.dev][pkg.go.dev-badge]][pkg.go.dev]
+[![Test][test-badge]][test]
+[![reviewdog][reviewdog-badge]][reviewdog]
+[![Releases][release-badge]][release]
+[![codecov][codecov-badge]][codecov]
 
 `go-bps`is a Go package to operate the basis point.
 Handling floating point numbers in programming causes rounding errors.
@@ -109,3 +111,16 @@ https://www.mercari.com/cla/
 Copyright 2020 Mercari, Inc.
 
 Licensed under the MIT License.
+
+<!-- badge links -->
+[test]: https://github.com/mercari/go-bps/actions?query=workflow%3A%22test+and+coverage%22
+[reviewdog]: https://github.com/mercari/go-bps/actions?query=workflow%3Areviewdog
+[codecov]: https://codecov.io/gh/mercari/go-bps
+[pkg.go.dev]: https://pkg.go.dev/go.mercari.io/go-bps
+[release]: https://github.com/mercari/go-bps/releases/latest
+
+[test-badge]: https://github.com/mercari/go-bps/workflows/test%20and%20coverage/badge.svg
+[reviewdog-badge]: https://github.com/mercari/go-bps/workflows/reviewdog/badge.svg
+[codecov-badge]: https://codecov.io/gh/mercari/go-bps/branch/main/graph/badge.svg?token=Zg50plo11r
+[pkg.go.dev-badge]: https://pkg.go.dev/badge/go.mercari.io/go-bps
+[release-badge]: https://img.shields.io/github/release/mercari/go-bps.svg?style=flat&logo=github
