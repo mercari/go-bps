@@ -3,7 +3,6 @@
 [![Test](https://github.com/mercari/go-bps/workflows/test%20and%20coverage/badge.svg)](https://github.com/mercari/go-bps/actions?query=workflow%3A%22test+and+coverage%22)
 [![reviewdog](https://github.com/mercari/go-bps/workflows/reviewdog/badge.svg)](https://github.com/mercari/go-bps/actions?query=workflow%3Areviewdog)
 [![codecov](https://codecov.io/gh/mercari/go-bps/branch/master/graph/badge.svg?token=H39T7apqlM)](https://codecov.io/gh/mercari/go-bps)
-[![dependabot](https://api.dependabot.com/badges/status?host=github&repo=mercari/go-bps&identifier=222331794)](https://app.dependabot.com/accounts/mercari/repos/222331794)
 
 `go-bps`is a Go package to operate the basis point.
 Handling floating point numbers in programming causes rounding errors.
