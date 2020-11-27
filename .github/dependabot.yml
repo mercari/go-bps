@@ -7,5 +7,24 @@ updates:
       interval: daily
       time: "09:00"
       timezone: "Asia/Tokyo"
+    labels:
+      - dependencies
+      - dependabot
+    reviewers:
+      - iwata
+  - package-ecosystem: github-actions
+    directory: /  # For GitHub Actions, set the `directory` to `/ `to check for workflow files in .github/workflows.
+    schedule:
+      interval: weekly
+      day: "monday"
+      time: "09:00"
+      timezone: "Asia/Tokyo"
+    commit-message:
+      prefix: GitHub actions
+      include: scope
+    labels:
+      - dependencies
+      - dependabot
+      - github-actions
     reviewers:
       - iwata
