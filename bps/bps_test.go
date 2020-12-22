@@ -11,50 +11,42 @@ import (
 func TestBPS_String_Default_BaseUnit(t *testing.T) {
 	t.Log("The default BaseUnit is DeciBasisPoint")
 
-	tests := []struct {
-		name string
+	tests := map[string]struct {
 		b    *bps.BPS
 		want string
 	}{
-		{
-			"1 ppb presents `0` as string",
+		"1 ppb presents `0` as string": {
 			bps.NewFromPPB(big.NewInt(1)),
 			"0",
 		},
-		{
-			"1 ppm presents `0` as string",
+		"1 ppm presents `0` as string": {
 			bps.NewFromPPM(big.NewInt(1)),
 			"0",
 		},
-		{
-			"1 deci basis point presents `1` as string",
+		"1 deci basis point presents `1` as string": {
 			bps.NewFromDeciBasisPoint(1),
 			"1",
 		},
-		{
-			"1 basis point presents `10` as string",
+		"1 basis point presents `10` as string": {
 			bps.NewFromBasisPoint(1),
 			"10",
 		},
-		{
-			"1 percentage presents `1000` as string",
+		"1 percentage presents `1000` as string": {
 			bps.NewFromPercentage(1),
 			"1000",
 		},
-		{
-			"1 amount presents `100000` as string",
+		"1 amount presents `100000` as string": {
 			bps.NewFromAmount(1),
 			"100000",
 		},
-		{
-			"nil presents `0` as string",
+		"nil presents `0` as string": {
 			&bps.BPS{},
 			"0",
 		},
 	}
-	for _, tt := range tests {
+	for name, tt := range tests {
 		tt := tt
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			if got := tt.b.String(); got != tt.want {
 				t.Errorf("BPS.String() = %v, want %v", got, tt.want)

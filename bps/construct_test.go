@@ -41,82 +41,65 @@ func TestOneAmountEquality(t *testing.T) {
 }
 
 func TestNewFromString(t *testing.T) {
-	tests := []struct {
-		name    string
+	tests := map[string]struct {
 		arg     string
 		want    *bps.BPS
 		wantErr bool
 	}{
-		{
-			"int part and decimal part",
+		"int part and decimal part": {
 			"123.456",
 			bps.NewFromBasisPoint(1234560),
 			false,
 		},
-		{
-			"only int part",
+		"only int part": {
 			"123",
 			bps.NewFromBasisPoint(1230000),
 			false,
 		},
-		{
-			"only decimal part",
+		"only decimal part": {
 			".1234",
 			bps.NewFromBasisPoint(1234),
 			false,
 		},
-		{
-			"negative value",
+		"negative value": {
 			"-123.456",
 			bps.NewFromBasisPoint(-1234560),
 			false,
 		},
-		{
-			"zero",
+		"zero": {
 			"0.0",
 			bps.NewFromAmount(0),
 			false,
 		},
-		{
-			"zero",
+		"short zero": {
 			".0",
 			bps.NewFromAmount(0),
 			false,
 		},
-		{
-			"If include multi dots, it should return an error",
+		"If include multi dots, it should return an error": {
 			"123.45.6",
 			nil,
 			true,
 		},
-		{
-			"If include multi dots, it should return an error",
-			"123.45.6",
-			nil,
-			true,
-		},
-		{
-			"If base 2 format, it should return an error",
+		"If base 2 format, it should return an error": {
 			"0b11",
 			nil,
 			true,
 		},
-		{
-			"If base 8 format, it should return an error",
+		"If base 8 format, it should return an error": {
 			"0o75",
 			nil,
 			true,
 		},
-		{
-			"If base 16 format, it should return an error",
+		"If base 16 format, it should return an error": {
 			"0xF5",
 			nil,
 			true,
 		},
 	}
-	for _, tt := range tests {
+	for name, tt := range tests {
 		tt := tt
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			got, err := bps.NewFromString(tt.arg)
 			if (err != nil) != tt.wantErr {
@@ -131,82 +114,65 @@ func TestNewFromString(t *testing.T) {
 }
 
 func TestMustFromString(t *testing.T) {
-	tests := []struct {
-		name      string
+	tests := map[string]struct {
 		arg       string
 		want      *bps.BPS
 		wantPanic bool
 	}{
-		{
-			"int part and decimal part",
+		"int part and decimal part": {
 			"123.456",
 			bps.NewFromBasisPoint(1234560),
 			false,
 		},
-		{
-			"only int part",
+		"only int part": {
 			"123",
 			bps.NewFromBasisPoint(1230000),
 			false,
 		},
-		{
-			"only decimal part",
+		"only decimal part": {
 			".1234",
 			bps.NewFromBasisPoint(1234),
 			false,
 		},
-		{
-			"negative value",
+		"negative value": {
 			"-123.456",
 			bps.NewFromBasisPoint(-1234560),
 			false,
 		},
-		{
-			"zero",
+		"zero": {
 			"0.0",
 			bps.NewFromAmount(0),
 			false,
 		},
-		{
-			"zero",
+		"short zero": {
 			".0",
 			bps.NewFromAmount(0),
 			false,
 		},
-		{
-			"If include multi dots, it should return an error",
+		"If include multi dots, it should return an error": {
 			"123.45.6",
 			nil,
 			true,
 		},
-		{
-			"If include multi dots, it should return an error",
-			"123.45.6",
-			nil,
-			true,
-		},
-		{
-			"If base 2 format, it should return an error",
+		"If base 2 format, it should return an error": {
 			"0b11",
 			nil,
 			true,
 		},
-		{
-			"If base 8 format, it should return an error",
+		"If base 8 format, it should return an error": {
 			"0o75",
 			nil,
 			true,
 		},
-		{
-			"If base 16 format, it should return an error",
+		"If base 16 format, it should return an error": {
 			"0xF5",
 			nil,
 			true,
 		},
 	}
-	for _, tt := range tests {
+	for name, tt := range tests {
 		tt := tt
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			if tt.wantPanic {
 				//nolint:gocritic
