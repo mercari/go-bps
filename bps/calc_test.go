@@ -182,10 +182,10 @@ func TestBPS_Div(t *testing.T) {
 			bps.NewFromPPM(big.NewInt(25)),
 		},
 		{
-			"100 ppms / 3 = 33 ppms, truncates after the decimal point",
+			"100 ppms / 3 = 33.333 ppms  = 33,333 ppbs, truncates after the decimal point",
 			bps.NewFromPPM(big.NewInt(100)),
 			3,
-			bps.NewFromPPM(big.NewInt(33)),
+			bps.NewFromPPB(big.NewInt(33333)),
 		},
 		{
 			"100 ppms / -5 = -20 ppms",
@@ -398,22 +398,22 @@ func TestAvg(t *testing.T) {
 		want  *bps.BPS
 	}{
 		{
-			"the average of 50 basis points, 125 basis points, and 345 basis points is 17,333 ppms rounded off",
+			"the average of 50 basis points, 125 basis points, and 345 basis points is 17,333,333 ppbs rounded off",
 			bps.NewFromBasisPoint(50),
 			[]*bps.BPS{
 				bps.NewFromBasisPoint(125),
 				bps.NewFromBasisPoint(345),
 			},
-			bps.NewFromPPM(big.NewInt(17333)),
+			bps.NewFromPPB(big.NewInt(17333333)),
 		},
 		{
-			"the average of 3 percentages, 2 amounts, and 50 basis points is 6783,333 ppms rounded off",
+			"the average of 3 percentages, 2 amounts, and 50 basis points is 6783,333,333 ppbs rounded off",
 			bps.NewFromPercentage(3),
 			[]*bps.BPS{
 				bps.NewFromAmount(2),
 				bps.NewFromBasisPoint(50),
 			},
-			bps.NewFromPPM(big.NewInt(678333)),
+			bps.NewFromPPB(big.NewInt(678333333)),
 		},
 		{
 			"the average of 3 deci basis points, 15 percentages, and -360 basis points is 3801 deci basis points",
@@ -425,13 +425,13 @@ func TestAvg(t *testing.T) {
 			bps.NewFromDeciBasisPoint(3801),
 		},
 		{
-			"the average of 50 basis points, 125 basis points, and nil is 5,833 ppms rounded off",
+			"the average of 50 basis points, 125 basis points, and nil is 5,833,333 ppbs rounded off",
 			bps.NewFromBasisPoint(50),
 			[]*bps.BPS{
 				bps.NewFromBasisPoint(125),
 				{},
 			},
-			bps.NewFromPPM(big.NewInt(5833)),
+			bps.NewFromPPB(big.NewInt(5833333)),
 		},
 	}
 	for _, tt := range tests {

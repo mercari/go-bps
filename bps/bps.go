@@ -7,7 +7,8 @@ type unit int
 
 // List of values that `unit` can take.
 const (
-	PPM unit = iota + 1
+	PPB unit = iota + 1
+	PPM
 	DeciBasisPoint
 	HalfBasisPoint
 	BasisPoint

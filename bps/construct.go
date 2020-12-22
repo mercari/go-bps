@@ -9,7 +9,8 @@ import (
 
 // Denominators for each parts
 const (
-	DenomDeciBasisPoint int64 = 10
+	DenomPPM            int64 = 1000
+	DenomDeciBasisPoint       = DenomPPM * 10
 	DenomHalfBasisPoint       = DenomDeciBasisPoint * 5
 	DenomBasisPoint           = DenomHalfBasisPoint * 2
 	DenomPercentage           = DenomBasisPoint * 100
@@ -55,9 +56,14 @@ func MustFromString(value string) *BPS {
 	return b
 }
 
+// NewFromPPB makes new BPS instance from part per billion(ppb)
+func NewFromPPB(ppb *big.Int) *BPS {
+	return newBPS(ppb)
+}
+
 // NewFromPPM makes new BPS instance from part per million(ppm)
 func NewFromPPM(ppm *big.Int) *BPS {
-	return newBPS(ppm)
+	return newBPS(ppm).Mul(DenomPPM)
 }
 
 // NewFromDeciBasisPoint makes new BPS instance from deci basis point
@@ -97,9 +103,11 @@ func NewFromBaseUnit(v int64) *BPS {
 		return NewFromBasisPoint(v)
 	case Percentage:
 		return NewFromPercentage(v)
+	case PPM:
+		return NewFromPPM(big.NewInt(v))
 	}
-	// The default unit is PPM
-	return NewFromPPM(big.NewInt(v))
+	// The default unit is PPB
+	return NewFromPPB(big.NewInt(v))
 }
 
 func newBPS(value *big.Int) *BPS {

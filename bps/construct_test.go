@@ -33,6 +33,11 @@ func TestOneAmountEquality(t *testing.T) {
 	if !oneAmt.Equal(ppm) {
 		t.Error("1 amount = 1000,000 ppm")
 	}
+
+	ppb := bps.NewFromPPB(big.NewInt(1000000000))
+	if !oneAmt.Equal(ppb) {
+		t.Error("1 amount = 1000,000,000 ppb")
+	}
 }
 
 func TestNewFromString(t *testing.T) {
@@ -269,32 +274,38 @@ func ExampleNewFromBaseUnit() {
 	deci := bps.NewFromBaseUnit(arg)
 	fmt.Println(deci.PPMs())
 
+	// BaseUnit is updated by PPB
+	bps.BaseUnit = bps.PPB
+	ppb := bps.NewFromBaseUnit(arg)
+	fmt.Println(ppb.PPBs())
+
 	// BaseUnit is updated by PPM
 	bps.BaseUnit = bps.PPM
 	ppm := bps.NewFromBaseUnit(arg)
-	fmt.Println(ppm.PPMs())
+	fmt.Println(ppm.PPBs())
 
 	// BaseUnit is updated by HalfBasisPoint
 	bps.BaseUnit = bps.HalfBasisPoint
 	hbp := bps.NewFromBaseUnit(arg)
-	fmt.Println(hbp.PPMs())
+	fmt.Println(hbp.PPBs())
 
 	// BaseUnit is updated by BasisPoint
 	bps.BaseUnit = bps.BasisPoint
 	bp := bps.NewFromBaseUnit(arg)
-	fmt.Println(bp.PPMs())
+	fmt.Println(bp.PPBs())
 
 	// BaseUnit is updated by Percentage
 	bps.BaseUnit = bps.Percentage
 	p := bps.NewFromBaseUnit(arg)
-	fmt.Println(p.PPMs())
+	fmt.Println(p.PPBs())
 
 	// teardown
 	bps.BaseUnit = u
 	// Output:
 	// 150
 	// 15
-	// 750
-	// 1500
-	// 150000
+	// 15000
+	// 750000
+	// 1500000
+	// 150000000
 }

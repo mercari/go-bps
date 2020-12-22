@@ -17,6 +17,11 @@ func TestBPS_String_Default_BaseUnit(t *testing.T) {
 		want string
 	}{
 		{
+			"1 ppb presents `0` as string",
+			bps.NewFromPPB(big.NewInt(1)),
+			"0",
+		},
+		{
 			"1 ppm presents `0` as string",
 			bps.NewFromPPM(big.NewInt(1)),
 			"0",
@@ -79,6 +84,10 @@ func ExampleString() {
 	bps.BaseUnit = bps.PPM
 	fmt.Println(b)
 
+	// Update BaseUnit to output as ppms
+	bps.BaseUnit = bps.PPB
+	fmt.Println(b)
+
 	// teardown
 	bps.BaseUnit = u
 	// Output:
@@ -86,4 +95,5 @@ func ExampleString() {
 	// 1500
 	// 15
 	// 150000
+	// 150000000
 }
