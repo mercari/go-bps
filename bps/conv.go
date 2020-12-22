@@ -8,9 +8,14 @@ func (b *BPS) rawValue() *big.Int {
 	return new(big.Int).Set(s.value)
 }
 
+// PPBs returns the row value that means PPB.
+func (b *BPS) PPBs() *big.Int {
+	return b.rawValue()
+}
+
 // PPMs returns the row value that means PPM.
 func (b *BPS) PPMs() *big.Int {
-	return b.rawValue()
+	return b.Div(DenomPPM).rawValue()
 }
 
 // Amounts returns the basis point as an integer amount.
@@ -64,8 +69,10 @@ func (b *BPS) BaseUnitAmounts() *big.Int {
 		return b.BasisPoints()
 	case Percentage:
 		return b.Percentages()
+	case PPM:
+		return b.PPMs()
 	}
-	// default is PPM
+	// default is PPB
 	return b.rawValue()
 }
 

@@ -33,85 +33,73 @@ func TestOneAmountEquality(t *testing.T) {
 	if !oneAmt.Equal(ppm) {
 		t.Error("1 amount = 1000,000 ppm")
 	}
+
+	ppb := bps.NewFromPPB(big.NewInt(1000000000))
+	if !oneAmt.Equal(ppb) {
+		t.Error("1 amount = 1000,000,000 ppb")
+	}
 }
 
 func TestNewFromString(t *testing.T) {
-	tests := []struct {
-		name    string
+	tests := map[string]struct {
 		arg     string
 		want    *bps.BPS
 		wantErr bool
 	}{
-		{
-			"int part and decimal part",
+		"int part and decimal part": {
 			"123.456",
 			bps.NewFromBasisPoint(1234560),
 			false,
 		},
-		{
-			"only int part",
+		"only int part": {
 			"123",
 			bps.NewFromBasisPoint(1230000),
 			false,
 		},
-		{
-			"only decimal part",
+		"only decimal part": {
 			".1234",
 			bps.NewFromBasisPoint(1234),
 			false,
 		},
-		{
-			"negative value",
+		"negative value": {
 			"-123.456",
 			bps.NewFromBasisPoint(-1234560),
 			false,
 		},
-		{
-			"zero",
+		"zero": {
 			"0.0",
 			bps.NewFromAmount(0),
 			false,
 		},
-		{
-			"zero",
+		"short zero": {
 			".0",
 			bps.NewFromAmount(0),
 			false,
 		},
-		{
-			"If include multi dots, it should return an error",
+		"If include multi dots, it should return an error": {
 			"123.45.6",
 			nil,
 			true,
 		},
-		{
-			"If include multi dots, it should return an error",
-			"123.45.6",
-			nil,
-			true,
-		},
-		{
-			"If base 2 format, it should return an error",
+		"If base 2 format, it should return an error": {
 			"0b11",
 			nil,
 			true,
 		},
-		{
-			"If base 8 format, it should return an error",
+		"If base 8 format, it should return an error": {
 			"0o75",
 			nil,
 			true,
 		},
-		{
-			"If base 16 format, it should return an error",
+		"If base 16 format, it should return an error": {
 			"0xF5",
 			nil,
 			true,
 		},
 	}
-	for _, tt := range tests {
+	for name, tt := range tests {
 		tt := tt
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			got, err := bps.NewFromString(tt.arg)
 			if (err != nil) != tt.wantErr {
@@ -126,82 +114,65 @@ func TestNewFromString(t *testing.T) {
 }
 
 func TestMustFromString(t *testing.T) {
-	tests := []struct {
-		name      string
+	tests := map[string]struct {
 		arg       string
 		want      *bps.BPS
 		wantPanic bool
 	}{
-		{
-			"int part and decimal part",
+		"int part and decimal part": {
 			"123.456",
 			bps.NewFromBasisPoint(1234560),
 			false,
 		},
-		{
-			"only int part",
+		"only int part": {
 			"123",
 			bps.NewFromBasisPoint(1230000),
 			false,
 		},
-		{
-			"only decimal part",
+		"only decimal part": {
 			".1234",
 			bps.NewFromBasisPoint(1234),
 			false,
 		},
-		{
-			"negative value",
+		"negative value": {
 			"-123.456",
 			bps.NewFromBasisPoint(-1234560),
 			false,
 		},
-		{
-			"zero",
+		"zero": {
 			"0.0",
 			bps.NewFromAmount(0),
 			false,
 		},
-		{
-			"zero",
+		"short zero": {
 			".0",
 			bps.NewFromAmount(0),
 			false,
 		},
-		{
-			"If include multi dots, it should return an error",
+		"If include multi dots, it should return an error": {
 			"123.45.6",
 			nil,
 			true,
 		},
-		{
-			"If include multi dots, it should return an error",
-			"123.45.6",
-			nil,
-			true,
-		},
-		{
-			"If base 2 format, it should return an error",
+		"If base 2 format, it should return an error": {
 			"0b11",
 			nil,
 			true,
 		},
-		{
-			"If base 8 format, it should return an error",
+		"If base 8 format, it should return an error": {
 			"0o75",
 			nil,
 			true,
 		},
-		{
-			"If base 16 format, it should return an error",
+		"If base 16 format, it should return an error": {
 			"0xF5",
 			nil,
 			true,
 		},
 	}
-	for _, tt := range tests {
+	for name, tt := range tests {
 		tt := tt
-		t.Run(tt.name, func(t *testing.T) {
+		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			if tt.wantPanic {
 				//nolint:gocritic
@@ -269,32 +240,38 @@ func ExampleNewFromBaseUnit() {
 	deci := bps.NewFromBaseUnit(arg)
 	fmt.Println(deci.PPMs())
 
+	// BaseUnit is updated by PPB
+	bps.BaseUnit = bps.PPB
+	ppb := bps.NewFromBaseUnit(arg)
+	fmt.Println(ppb.PPBs())
+
 	// BaseUnit is updated by PPM
 	bps.BaseUnit = bps.PPM
 	ppm := bps.NewFromBaseUnit(arg)
-	fmt.Println(ppm.PPMs())
+	fmt.Println(ppm.PPBs())
 
 	// BaseUnit is updated by HalfBasisPoint
 	bps.BaseUnit = bps.HalfBasisPoint
 	hbp := bps.NewFromBaseUnit(arg)
-	fmt.Println(hbp.PPMs())
+	fmt.Println(hbp.PPBs())
 
 	// BaseUnit is updated by BasisPoint
 	bps.BaseUnit = bps.BasisPoint
 	bp := bps.NewFromBaseUnit(arg)
-	fmt.Println(bp.PPMs())
+	fmt.Println(bp.PPBs())
 
 	// BaseUnit is updated by Percentage
 	bps.BaseUnit = bps.Percentage
 	p := bps.NewFromBaseUnit(arg)
-	fmt.Println(p.PPMs())
+	fmt.Println(p.PPBs())
 
 	// teardown
 	bps.BaseUnit = u
 	// Output:
 	// 150
 	// 15
-	// 750
-	// 1500
-	// 150000
+	// 15000
+	// 750000
+	// 1500000
+	// 150000000
 }
