@@ -1,0 +1,40 @@
+---
+name: auto go-mod-tidy
+on:
+  push:
+    paths: ["go.mod"]
+
+jobs:
+  tidy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: debug
+        uses: hmarr/debug-action@v1.0.0
+      - uses: actions/checkout@v2
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "1.15"
+      - id: log
+        run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
+      - name: Run go mod tidy
+        run: |
+          rm go.sum
+          go mod tidy && go mod edit -fmt go.mod
+      - id: git_diff
+        run: echo "::set-output name=diff::$(git status --porcelain)"
+      - name: configure github user
+        run: |
+          git config --local user.email "121048+iwata@users.noreply.github.com"
+          git config --local user.name "Motonori IWATA"
+      - name: Print next steps condition values
+        run: |
+          echo "git diff: ${{ steps.git_diff.outputs.diff }}"
+          echo "commit message: ${{ steps.log.outputs.message }}"
+      - name: commit and push
+        if: "!contains(steps.log.outputs.message, 'ci skip') && steps.git_diff.outputs.diff != ''"
+        run: |
+          echo steps.git
+          git add -A
+          git commit -m "run go mod tidy"
+          git push -u origin HEAD:${GITHUB_REF}
