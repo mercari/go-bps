@@ -29,6 +29,6 @@ jobs:
       - name: Calc coverage
         run: make cover
       - name: Codecov
-        uses: codecov/codecov-action@v1.2.1
+        uses: codecov/codecov-action@v1.2.2
         with:
           token: ${{secrets.CODECOV_TOKEN}}
