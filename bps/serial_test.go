@@ -118,3 +118,57 @@ func TestBPS_Scan(t *testing.T) {
 		})
 	}
 }
+
+func TestBPS_UnmarshalText(t *testing.T) {
+	t.Parallel()
+	tests := map[string]struct {
+		value   string
+		want    *bps.BPS
+		wantErr bool
+	}{
+		"If value is valid string with the integer part abbreviating, it should set value via NewFromString": {
+			".15",
+			bps.NewFromPercentage(15),
+			false,
+		},
+		"If value is valid string, it should set value via NewFromString": {
+			"1.15",
+			bps.NewFromPercentage(115),
+			false,
+		},
+		"If value is negative, it should set value via NewFromString": {
+			"-123.456",
+			bps.NewFromBasisPoint(-1234560),
+			false,
+		},
+		"If value is zero, it should set value via NewFromString": {
+			"0",
+			bps.NewFromAmount(0),
+			false,
+		},
+		"If value is invalid string, it should return an error": {
+			"a15",
+			&bps.BPS{},
+			true,
+		},
+		"If value is empty, it should return an error": {
+			"",
+			&bps.BPS{},
+			true,
+		},
+	}
+	for name, tt := range tests {
+		name := name
+		tt := tt
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			b := &bps.BPS{}
+			if err := b.UnmarshalText([]byte(tt.value)); (err != nil) != tt.wantErr {
+				t.Errorf("BPS.UnmarshalText() error = %v, wantErr %v", err, tt.wantErr)
+			}
+			if !reflect.DeepEqual(b, tt.want) {
+				t.Errorf("BPS.Value() = %v, want %v", b, tt.want)
+			}
+		})
+	}
+}
