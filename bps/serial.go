@@ -1,9 +1,13 @@
 package bps
 
 import (
+	"database/sql"
 	"database/sql/driver"
 	"errors"
 )
+
+// make sure a *BPS implements the sql.Scanner interface.
+var _ sql.Scanner = (*BPS)(nil)
 
 // Scan implements the sql.Scanner interface for database deserialization.
 func (b *BPS) Scan(value interface{}) error {
@@ -47,6 +51,9 @@ func (b *BPS) Scan(value interface{}) error {
 
 	return errors.New("BPS.Scan: invalid type, supporting only integer or string")
 }
+
+// make sure a *BPS implements the driver.Valuer interface.
+var _ driver.Valuer = (*BPS)(nil)
 
 // Value implements the driver.Valuer interface for database serialization.
 func (b *BPS) Value() (driver.Value, error) {
