@@ -158,7 +158,6 @@ func TestBPS_UnmarshalText(t *testing.T) {
 		},
 	}
 	for name, tt := range tests {
-		name := name
 		tt := tt
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
