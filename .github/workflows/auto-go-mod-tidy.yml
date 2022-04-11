@@ -14,7 +14,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v3
         with:
-          go-version: "1.15"
+          go-version: "1.17"
       - id: log
         run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
       - name: Run go mod tidy
