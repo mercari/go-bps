@@ -81,7 +81,7 @@ func Sum(first *BPS, rest ...*BPS) *BPS {
 //
 // To call this function with an array, you must do:
 //
-//     Max(arr[0], arr[1:]...)
+//	Max(arr[0], arr[1:]...)
 //
 // This makes it harder to accidentally call Max with 0 arguments.
 func Max(first *BPS, rest ...*BPS) *BPS {
@@ -98,7 +98,7 @@ func Max(first *BPS, rest ...*BPS) *BPS {
 //
 // To call this function with an array, you must do:
 //
-//     Min(arr[0], arr[1:]...)
+//	Min(arr[0], arr[1:]...)
 //
 // This makes it harder to accidentally call Min with 0 arguments.
 func Min(fisrt *BPS, rest ...*BPS) *BPS {
