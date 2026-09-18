@@ -2,18 +2,18 @@ package bps
 
 import "math/big"
 
-// rawValue returns the row value as new big.Int instance
+// rawValue returns the raw value as new big.Int instance
 func (b *BPS) rawValue() *big.Int {
 	s := nilSafe(b)
 	return new(big.Int).Set(s.value)
 }
 
-// PPBs returns the row value that means PPB.
+// PPBs returns the raw value that means PPB.
 func (b *BPS) PPBs() *big.Int {
 	return b.rawValue()
 }
 
-// PPMs returns the row value that means PPM.
+// PPMs returns the raw value that means PPM.
 func (b *BPS) PPMs() *big.Int {
 	return b.Div(DenomPPM).rawValue()
 }
@@ -38,7 +38,7 @@ func (b *BPS) HalfBasisPoints() *big.Int {
 	return b.Div(DenomHalfBasisPoint).rawValue()
 }
 
-// DeciBasisPoints returns the basis point as an integer half basis point count.
+// DeciBasisPoints returns the basis point as an integer deci basis point count.
 func (b *BPS) DeciBasisPoints() *big.Int {
 	return b.Div(DenomDeciBasisPoint).rawValue()
 }
@@ -58,7 +58,7 @@ func (b *BPS) Float64() (f float64, exact bool) {
 }
 
 // BaseUnitAmounts returns amount representation of BaseUnit as generated.
-// That means the effective digits is modifiable by BaseUnit.
+// That means the effective digits are modifiable by BaseUnit.
 func (b *BPS) BaseUnitAmounts() *big.Int {
 	switch BaseUnit {
 	case DeciBasisPoint:
