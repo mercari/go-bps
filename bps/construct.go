@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-// Denominators for each parts
+// Denominators for each part
 const (
 	DenomPPM            int64 = 1000
 	DenomDeciBasisPoint       = DenomPPM * 10
@@ -56,12 +56,12 @@ func MustFromString(value string) *BPS {
 	return b
 }
 
-// NewFromPPB makes new BPS instance from part per billion(ppb)
+// NewFromPPB makes new BPS instance from part per billion (ppb)
 func NewFromPPB(ppb *big.Int) *BPS {
 	return newBPS(ppb)
 }
 
-// NewFromPPM makes new BPS instance from part per million(ppm)
+// NewFromPPM makes new BPS instance from part per million (ppm)
 func NewFromPPM(ppm *big.Int) *BPS {
 	return newBPS(ppm).Mul(DenomPPM)
 }
@@ -92,7 +92,7 @@ func NewFromAmount(amt int64) *BPS {
 }
 
 // NewFromBaseUnit makes new BPS instance from BaseUnit value.
-// That means the effective digits is modifiable by BaseUnit.
+// That means the effective digits are modifiable by BaseUnit.
 func NewFromBaseUnit(v int64) *BPS {
 	switch BaseUnit {
 	case DeciBasisPoint:

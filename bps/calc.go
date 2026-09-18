@@ -101,8 +101,8 @@ func Max(first *BPS, rest ...*BPS) *BPS {
 //	Min(arr[0], arr[1:]...)
 //
 // This makes it harder to accidentally call Min with 0 arguments.
-func Min(fisrt *BPS, rest ...*BPS) *BPS {
-	min := fisrt
+func Min(first *BPS, rest ...*BPS) *BPS {
+	min := first
 	for _, b := range rest {
 		if b.Cmp(min) < 0 {
 			min = b
